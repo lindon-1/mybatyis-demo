@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.demo.mapper.RoleMapper">
+    <resultMap id="role" type="com.example.demo.po.Role">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"></result>
+        <collection property="resources" column="id" javaType="java.util.List" select="com.example.demo.mapper.ResourceMapper.selectByRoleId"></collection>
+    </resultMap>
+
+    <select id="selectById" resultMap="role">
+        select * from role where id = #{id}
+    </select>
+
+    <select id="getUser" resultType="com.example.demo.po.User">
+        select * from user where id = #{id}
+    </select>
+
+
+    <insert id="save">
+        insert into role(name,user_id) values(#{name}, #{userId})
+    </insert>
+
+
+</mapper>
